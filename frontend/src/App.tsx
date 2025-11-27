@@ -7,7 +7,7 @@ const BACKEND_URL = 'http://localhost:5000';
 const socket = io(BACKEND_URL);
 
 type ActionType = 'full' | 'clean' | 'convert' | 'pricing';
-type TabKey = 'pipeline' | 'pricing' | 'docs';
+type TabKey = 'pipeline' | 'pricing' | 'dashboard' | 'docs';
 
 const PROPERTY_TYPES = ['Departamento', 'Casa', 'PH', 'Oficina', 'Local', 'Terreno'];
 const OPERATIONS = ['Venta', 'Alquiler'];
@@ -350,6 +350,9 @@ function App() {
           <button className={`tab-button ${activeTab === 'pricing' ? 'active' : ''}`} onClick={() => setActiveTab('pricing')}>
             Pricing
           </button>
+          <button className={`tab-button ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
+            Dashboard
+          </button>
           <button className={`tab-button ${activeTab === 'docs' ? 'active' : ''}`} onClick={() => setActiveTab('docs')}>
             Documentación
           </button>
@@ -644,6 +647,27 @@ function App() {
         </section>
         )}
 
+        {activeTab === 'dashboard' && (
+          <section className="dashboard-section">
+            <div className="section-header">
+              <div>
+                <p className="card-label">Power BI</p>
+                <h3>Dashboard de propiedades</h3>
+                <p className="card-hint">Visualizaci�n embebida para seguir inventario, demanda y precios.</p>
+              </div>
+            </div>
+            <div className="dashboard-embed">
+              <iframe
+                title="Reporte_Propiedades"
+                src="https://app.powerbi.com/reportEmbed?reportId=fe954fb7-74f8-4415-acca-5ae9e833df6d&autoAuth=true&ctid=344979d0-d31d-4c57-8ba0-491aff4acaed"
+                frameBorder="0"
+                allowFullScreen
+              />
+            </div>
+            <p className="mini status">Si no ves el dashboard, valida tus permisos en Power BI o abre en una pesta�a separada.</p>
+          </section>
+        )}
+
         {activeTab === 'docs' && (
           <section id="docs" className="docs-section">
             <div className="section-header">
@@ -687,7 +711,7 @@ function App() {
                   Entrenamiento: split 80/20 aleatorio. El modelo se guarda en backend/pricing_model.pkl y se recarga automáticamente al predecir. Si agregas columnas en el dataset de pricing, reentrena con el botón para refrescar el pipeline de features.
                 </p>
                 <p className="doc-text">
-                  Hiperparámetros actuales: GradientBoostingRegressor(random_state=42). Ajustes sugeridos si buscas más performance: aumentar n_estimators y reducir learning_rate; probar max_depth moderado (2-4) y validar que MAE/MAPE no empeoren por sobreajuste.
+                  Hiperparámetros actuales: GradientBoostingRegressor con valores por defecto y random_state=42 para reproducibilidad (backend/server.py, _train_pricing_model): n_estimators=100, learning_rate=0.1, max_depth=3, subsample=1.0, max_features=None, min_samples_split=2, min_samples_leaf=1, loss="squared_error", etc. Preprocesado: imputación mediana en numéricos y más frecuente en categóricos + OneHotEncoder(handle_unknown="ignore"), seguido de un split 80/20 (train_test_split(test_size=0.2, random_state=42)). Motivo: baseline estable y poco propenso al sobreajuste sin tuning, con profundidad baja y 100 árboles estándar; reproducibilidad con random_state; no se ajustaron hiperparámetros adicionales para mantener simplicidad y tiempos de entrenamiento cortos.
                 </p>
                 <div className="value-box">
                   <p className="card-label">Reglas de limpieza previas</p>
