@@ -2,6 +2,10 @@
 
 Este proyecto proporciona una interfaz web simple y profesional para ejecutar un pipeline de limpieza de datos de Python.
 
+La industria inmobiliaria enfrenta una paradoja crítica: mientras el volumen de datos disponibles crece exponencialmente, la toma de decisiones sigue dependiendo de métodos tradicionales que generan ineficiencias operativas y comerciales significativas.
+
+
+
 La aplicacion consta de dos componentes principales:
 1.  **Backend (Flask):** Un servidor en Python que ejecuta el script de limpieza y comunica el estado del proceso en tiempo real.
 2.  **Frontend (React):** Una moderna interfaz de usuario web que permite a un usuario final iniciar el pipeline y ver su progreso.
@@ -91,3 +95,14 @@ Abre la URL del frontend (ej. `http://localhost:5173`) en tu navegador web. Vera
 - **Para ver la ultima ejecucion:** La fecha y hora de la ultima modificacion del archivo de salida se muestra en el encabezado.
 
 Ambas terminales (backend y frontend) deben permanecer abiertas mientras usas la aplicacion.
+
+## Conclusión
+
+###Colaboradores 
+-Nicolás Amarilla
+-Nicolás Djandjikian
+-Nicolás Fernández
+-Carlos Hernández
+
+
+
